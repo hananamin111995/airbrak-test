@@ -53,10 +53,14 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
+            'channels' => ['single', 'airbrake'],
             'ignore_exceptions' => false,
         ],
-
+        'airbrake' => [
+            'driver' => 'custom',
+            'via' => Kouz\LaravelAirbrake\AirbrakeLogger::class,
+            'level' => 'error',
+        ],
         'single' => [
             'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),

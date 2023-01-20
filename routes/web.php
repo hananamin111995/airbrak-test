@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +16,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+Route::get('/exp', function (Exception $e) {
+    if ($this->shouldReport($e)) {
+        $airbrakeNotifier = App::make('Airbrake\Notifier');
+        $airbrakeNotifier->notify($e);
+    }
+
+    parent::report($e);
 });
